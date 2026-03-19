@@ -7,7 +7,1056 @@
   <title>LUXE — Premium Fashion Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <style>
+/* =====================================================
+   LUXE Fashion Store
+   Author  : Aditya | github.com/Aditya4902
+   File    : css/style.css
+   Version : 1.0.0
+   ===================================================== */
+
+/* ----- CSS Custom Properties ----- */
+:root {
+  --bg        : #0a0a0f;
+  --card      : #13131a;
+  --border    : rgba(255, 255, 255, 0.07);
+  --text      : #f0eee8;
+  --muted     : #888896;
+  --pink      : #ff4d8d;
+  --cyan      : #00e5ff;
+  --gold      : #ffd166;
+  --purple    : #b06cff;
+  --green     : #00ff94;
+  --white     : #ffffff;
+}
+
+/* ----- Reset ----- */
+*,
+*::before,
+*::after {
+  margin     : 0;
+  padding    : 0;
+  box-sizing : border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background  : var(--bg);
+  color       : var(--text);
+  font-family : 'Syne', sans-serif;
+  font-weight : 400;
+  overflow-x  : hidden;
+  cursor      : none;
+}
+
+/* ----- Custom Cursor ----- */
+#cursor {
+  position       : fixed;
+  width          : 12px;
+  height         : 12px;
+  background     : var(--pink);
+  border-radius  : 50%;
+  pointer-events : none;
+  z-index        : 9999;
+  transform      : translate(-50%, -50%);
+  transition     : width 0.2s, height 0.2s;
+  mix-blend-mode : screen;
+}
+
+#cursor-ring {
+  position       : fixed;
+  width          : 40px;
+  height         : 40px;
+  border         : 1px solid rgba(255, 77, 141, 0.5);
+  border-radius  : 50%;
+  pointer-events : none;
+  z-index        : 9998;
+  transform      : translate(-50%, -50%);
+  transition     : width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+/* ----- Particles ----- */
+#particles {
+  position       : fixed;
+  inset          : 0;
+  pointer-events : none;
+  z-index        : 1;
+  overflow       : hidden;
+}
+
+.particle {
+  position      : absolute;
+  border-radius : 50%;
+  animation     : floatUp linear infinite;
+  opacity       : 0;
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-20px) scale(1.2); opacity: 0; }
+}
+
+/* ----- Loader ----- */
+#loader {
+  position        : fixed;
+  inset           : 0;
+  background      : var(--bg);
+  z-index         : 10000;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  flex-direction  : column;
+  gap             : 24px;
+  transition      : opacity 0.8s ease;
+}
+
+#loader.gone { opacity: 0; pointer-events: none; }
+
+.loader-logo {
+  font-family     : 'Playfair Display', serif;
+  font-size       : 72px;
+  font-weight     : 900;
+  letter-spacing  : 20px;
+  background      : linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
+  -webkit-background-clip : text;
+  -webkit-text-fill-color : transparent;
+  background-clip : text;
+  animation       : shimmer 2s linear infinite;
+  background-size : 200%;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+.loader-bar {
+  width         : 200px;
+  height        : 2px;
+  background    : rgba(255, 255, 255, 0.1);
+  border-radius : 99px;
+  overflow      : hidden;
+}
+
+.loader-fill {
+  height        : 100%;
+  background    : linear-gradient(90deg, var(--pink), var(--cyan));
+  border-radius : 99px;
+  animation     : barFill 1.4s ease forwards;
+}
+
+@keyframes barFill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.loader-txt {
+  font-size      : 11px;
+  letter-spacing : 6px;
+  color          : var(--muted);
+  text-transform : uppercase;
+}
+
+/* ----- Navbar ----- */
+nav {
+  position        : fixed;
+  top             : 0;
+  left            : 0;
+  right           : 0;
+  z-index         : 100;
+  height          : 70px;
+  padding         : 0 48px;
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
+  border-bottom   : 1px solid var(--border);
+  transition      : background 0.3s, backdrop-filter 0.3s;
+}
+
+nav.scrolled {
+  background      : rgba(10, 10, 15, 0.96);
+  backdrop-filter : blur(20px);
+}
+
+.nav-logo {
+  font-family     : 'Playfair Display', serif;
+  font-size       : 24px;
+  font-weight     : 900;
+  letter-spacing  : 6px;
+  background      : linear-gradient(135deg, var(--pink), var(--purple));
+  -webkit-background-clip : text;
+  -webkit-text-fill-color : transparent;
+  background-clip : text;
+  text-decoration : none;
+}
+
+.nav-links { display: flex; gap: 32px; }
+
+.nav-link {
+  font-size      : 11px;
+  letter-spacing : 3px;
+  text-transform : uppercase;
+  color          : var(--muted);
+  border         : none;
+  background     : none;
+  font-family    : 'Syne', sans-serif;
+  cursor         : none;
+  transition     : color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active { color: var(--white); }
+
+.nav-right { display: flex; align-items: center; gap: 16px; }
+
+.search-box {
+  display       : flex;
+  align-items   : center;
+  gap           : 8px;
+  background    : rgba(255, 255, 255, 0.05);
+  border        : 1px solid var(--border);
+  padding       : 8px 16px;
+  border-radius : 99px;
+}
+
+.search-box input {
+  background  : none;
+  border      : none;
+  color       : var(--text);
+  font-family : 'Syne', sans-serif;
+  font-size   : 12px;
+  width       : 160px;
+  outline     : none;
+}
+
+.search-box input::placeholder { color: var(--muted); }
+.search-icon { color: var(--muted); font-size: 14px; }
+
+.cart-pill {
+  display        : flex;
+  align-items    : center;
+  gap            : 10px;
+  background     : linear-gradient(135deg, var(--pink), var(--purple));
+  border         : none;
+  padding        : 10px 22px;
+  cursor         : none;
+  font-family    : 'Syne', sans-serif;
+  font-size      : 11px;
+  letter-spacing : 2px;
+  text-transform : uppercase;
+  color          : #fff;
+  font-weight    : 700;
+  border-radius  : 99px;
+  transition     : transform 0.2s, box-shadow 0.2s;
+}
+
+.cart-pill:hover { transform: scale(1.04); box-shadow: 0 0 30px rgba(255, 77, 141, 0.5); }
+
+.cart-badge {
+  background      : #fff;
+  color           : var(--pink);
+  width           : 18px;
+  height          : 18px;
+  border-radius   : 50%;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  font-size       : 10px;
+  font-weight     : 800;
+}
+
+/* ----- Hero ----- */
+.hero {
+  min-height  : 100vh;
+  position    : relative;
+  display     : flex;
+  align-items : center;
+  overflow    : hidden;
+  padding     : 0 48px;
+  background  : var(--bg);
+}
+
+.hero-grid-bg {
+  position         : absolute;
+  inset            : 0;
+  background-image : linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size  : 60px 60px;
+  pointer-events   : none;
+}
+
+.hero-glow {
+  position       : absolute;
+  top            : -200px;
+  right          : -200px;
+  width          : 700px;
+  height         : 700px;
+  background     : radial-gradient(circle, rgba(176,108,255,0.2) 0%, transparent 70%);
+  pointer-events : none;
+}
+
+.hero-glow2 {
+  position       : absolute;
+  bottom         : -100px;
+  left           : 10%;
+  width          : 500px;
+  height         : 500px;
+  background     : radial-gradient(circle, rgba(255,77,141,0.15) 0%, transparent 70%);
+  pointer-events : none;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+.hero-eyebrow {
+  display        : inline-flex;
+  align-items    : center;
+  gap            : 10px;
+  background     : rgba(255, 77, 141, 0.1);
+  border         : 1px solid rgba(255, 77, 141, 0.3);
+  padding        : 6px 16px;
+  font-size      : 11px;
+  letter-spacing : 3px;
+  text-transform : uppercase;
+  color          : var(--pink);
+  margin-bottom  : 28px;
+  border-radius  : 99px;
+  opacity        : 0;
+  animation      : fadeUp 0.8s ease 1.6s forwards;
+}
+
+.blink-dot {
+  width         : 6px;
+  height        : 6px;
+  background    : var(--pink);
+  border-radius : 50%;
+  flex-shrink   : 0;
+  animation     : blink 1s ease infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.hero-title {
+  font-family    : 'Playfair Display', serif;
+  font-size      : clamp(60px, 9vw, 110px);
+  font-weight    : 900;
+  line-height    : 0.95;
+  letter-spacing : -2px;
+  margin-bottom  : 28px;
+  opacity        : 0;
+  animation      : fadeUp 0.8s ease 1.8s forwards;
+}
+
+.line1 { display: block; color: var(--white); }
+
+.line2 {
+  display                 : block;
+  background              : linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
+  -webkit-background-clip : text;
+  -webkit-text-fill-color : transparent;
+  background-clip         : text;
+}
+
+.hero-sub {
+  font-size     : 16px;
+  line-height   : 1.8;
+  color         : var(--muted);
+  max-width     : 480px;
+  margin-bottom : 44px;
+  opacity       : 0;
+  animation     : fadeUp 0.8s ease 2s forwards;
+}
+
+.hero-ctas {
+  display   : flex;
+  gap       : 16px;
+  flex-wrap : wrap;
+  opacity   : 0;
+  animation : fadeUp 0.8s ease 2.2s forwards;
+}
+
+.btn-glow {
+  background     : linear-gradient(135deg, var(--pink), var(--purple));
+  border         : none;
+  color          : #fff;
+  padding        : 16px 44px;
+  font-family    : 'Syne', sans-serif;
+  font-size      : 12px;
+  letter-spacing : 2px;
+  text-transform : uppercase;
+  font-weight    : 700;
+  cursor         : none;
+  border-radius  : 2px;
+  transition     : all 0.3s;
+}
+
+.btn-glow:hover { box-shadow: 0 0 40px rgba(255, 77, 141, 0.6); transform: translateY(-2px); }
+
+.btn-ghost {
+  background     : transparent;
+  border         : 1px solid rgba(255, 255, 255, 0.2);
+  color          : var(--text);
+  padding        : 16px 44px;
+  font-family    : 'Syne', sans-serif;
+  font-size      : 12px;
+  letter-spacing : 2px;
+  text-transform : uppercase;
+  cursor         : none;
+  border-radius  : 2px;
+  transition     : all 0.3s;
+}
+
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); }
+
+.hero-floats {
+  position       : absolute;
+  right          : 80px;
+  top            : 50%;
+  transform      : translateY(-50%);
+  display        : flex;
+  flex-direction : column;
+  gap            : 16px;
+  z-index        : 2;
+  opacity        : 0;
+  animation      : fadeUp 0.8s ease 2.4s forwards;
+}
+
+.hf-card {
+  background      : rgba(19, 19, 26, 0.9);
+  border          : 1px solid var(--border);
+  backdrop-filter : blur(12px);
+  padding         : 16px 20px;
+  display         : flex;
+  align-items     : center;
+  gap             : 14px;
+  border-radius   : 8px;
+  transition      : transform 0.3s;
+}
+
+.hf-card:hover  { transform: translateX(-8px); }
+.hf-pink        { border-left: 3px solid var(--pink); }
+.hf-cyan        { border-left: 3px solid var(--cyan); }
+.hf-gold        { border-left: 3px solid var(--gold); }
+
+.fi {
+  width           : 44px;
+  height          : 44px;
+  border-radius   : 50%;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  font-size       : 20px;
+  flex-shrink     : 0;
+}
+
+.fi-pink { background: rgba(255, 77, 141, 0.15); }
+.fi-cyan { background: rgba(0, 229, 255, 0.1); }
+.fi-gold { background: rgba(255, 209, 102, 0.1); }
+
+.ft strong { display: block; font-size: 14px; font-weight: 600; color: var(--white); }
+.ft span   { font-size: 11px; color: var(--muted); }
+
+/* ----- Marquee ----- */
+.marquee-wrap {
+  background  : linear-gradient(135deg, var(--pink), var(--purple), var(--cyan), var(--gold));
+  padding     : 14px 0;
+  overflow    : hidden;
+  white-space : nowrap;
+}
+
+.marquee-track {
+  display   : inline-flex;
+  animation : marquee 20s linear infinite;
+}
+
+.marquee-item {
+  font-size      : 12px;
+  letter-spacing : 4px;
+  text-transform : uppercase;
+  font-weight    : 700;
+  color          : #fff;
+  padding        : 0 40px;
+  opacity        : 0.9;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ----- Features ----- */
+.features {
+  display               : grid;
+  grid-template-columns : repeat(4, 1fr);
+  background            : var(--card);
+  border                : 1px solid var(--border);
+}
+
+.feat              { padding: 36px 32px; border-right: 1px solid var(--border); transition: background 0.3s; }
+.feat:last-child   { border-right: none; }
+.feat:hover        { background: rgba(255, 255, 255, 0.02); }
+.feat-icon         { font-size: 28px; margin-bottom: 14px; display: block; }
+.feat h4           { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: 1px; }
+.feat p            { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ----- Section ----- */
+.section      { padding: 100px 48px; }
+.sec-ey       { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--pink); margin-bottom: 12px; }
+.sec-ti       { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 700; line-height: 1.1; margin-bottom: 48px; }
+.grad         { background: linear-gradient(135deg, var(--cyan), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ----- Filters ----- */
+.filters      { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 48px; }
+.fps          { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-right { display: flex; align-items: center; gap: 16px; }
+.results-info { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+
+.fp {
+  padding        : 8px 22px;
+  border         : 1px solid var(--border);
+  background     : transparent;
+  color          : var(--muted);
+  font-family    : 'Syne', sans-serif;
+  font-size      : 11px;
+  letter-spacing : 2px;
+  text-transform : uppercase;
+  cursor         : none;
+  border-radius  : 99px;
+  transition     : all 0.2s;
+}
+
+.fp:hover,
+.fp.active { background: linear-gradient(135deg, var(--pink), var(--purple)); border-color: transparent; color: #fff; }
+
+.sort-sel {
+  background    : var(--card);
+  border        : 1px solid var(--border);
+  color         : var(--muted);
+  padding       : 8px 20px;
+  font-family   : 'Syne', sans-serif;
+  font-size     : 12px;
+  cursor        : none;
+  border-radius : 99px;
+}
+
+/* ----- Product Grid ----- */
+.grid {
+  display               : grid;
+  grid-template-columns : repeat(auto-fill, minmax(300px, 1fr));
+  gap                   : 28px;
+}
+
+.pcard {
+  background      : var(--card);
+  border          : 1px solid var(--border);
+  position        : relative;
+  overflow        : hidden;
+  cursor          : none;
+  transform-style : preserve-3d;
+  border-radius   : 4px;
+  transition      : box-shadow 0.3s;
+}
+
+.pcard:hover { box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08); }
+
+.pcard-img {
+  position     : relative;
+  overflow     : hidden;
+  aspect-ratio : 3 / 4;
+}
+
+.pcard-placeholder {
+  width           : 100%;
+  height          : 100%;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  font-size       : 90px;
+  transition      : transform 0.6s ease;
+}
+
+.pcard:hover .pcard-placeholder { transform: scale(1.08); }
+
+.pbadge {
+  position       : absolute;
+  top            : 14px;
+  left           : 14px;
+  padding        : 4px 14px;
+  font-size      : 10px;
+  letter-spacing : 2px;
+  text-transform : uppercase;
+  font-weight    : 700;
+  border-radius  : 99px;
+  z-index        : 2;
+}
+
+.b-new  { background: var(--cyan);  color: #000; }
+.b-sale { background: var(--pink);  color: #fff; }
+.b-hot  { background: var(--gold);  color: #000; }
+
+.pcard-overlay {
+  position        : absolute;
+  inset           : 0;
+  background      : linear-gradient(to top, rgba(10,10,15,0.97) 0%, transparent 55%);
+  opacity         : 0;
+  transition      : opacity 0.3s;
+  display         : flex;
+  flex-direction  : column;
+  justify-content : flex-end;
+  padding         : 24px;
+  gap             : 10px;
+}
+
+.pcard:hover .pcard-overlay { opacity: 1; }
+
+.ov-add {
+  width          : 100%;
+  background     : linear-gradient(135deg, var(--pink), var(--purple));
+  border         : none;
+  color          : #fff;
+  padding        : 14px;
+  font-family    : 'Syne', sans-serif;
+  font-size      : 11px;
+  letter-spacing : 2px;
+  text-transform : uppercase;
+  font-weight    : 700;
+  cursor         : none;
+  border-radius  : 2px;
+  transition     : all 0.2s;
+}
+
+.ov-add:hover { box-shadow: 0 0 24px rgba(255, 77, 141, 0.5); }
+
+.ov-row { display: flex; gap: 8px; }
+
+.ov-wish,
+.ov-view {
+  flex           : 1;
+  background     : rgba(255, 255, 255, 0.07);
+  border         : 1px solid rgba(255, 255, 255, 0.12);
+  color          : var(--text);
+  padding        : 10px;
+  font-family    : 'Syne', sans-serif;
+  font-size      : 10px;
+  letter-spacing : 1.5px;
+  text-transform : uppercase;
+  cursor         : none;
+  border-radius  : 2px;
+  transition     : all 0.2s;
+}
+
+.ov-wish:hover,
+.ov-wish.liked { background: rgba(255,77,141,0.15); border-color: var(--pink); color: var(--pink); }
+
+.ov-view:hover { background: rgba(0,229,255,0.08); border-color: var(--cyan); color: var(--cyan); }
+
+.pcard-info   { padding: 20px 22px 24px; }
+.pc-cat       { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--pink); margin-bottom: 6px; }
+.pc-name      { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 10px; line-height: 1.2; }
+.pc-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.pc-price     { font-size: 20px; font-weight: 700; color: var(--white); }
+.pc-old-price { font-size: 14px; color: var(--muted); text-decoration: line-through; }
+.pc-discount  { font-size: 11px; background: rgba(0,255,148,0.1); color: var(--green); padding: 2px 8px; border-radius: 99px; font-weight: 700; }
+.pc-stars     { display: flex; align-items: center; gap: 6px; }
+.pc-stars span  { font-size: 12px; color: var(--gold); letter-spacing: 1px; }
+.pc-stars small { font-size: 11px; color: var(--muted); }
+
+/* ----- Why Us ----- */
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+
+.why-card {
+  background    : var(--card);
+  border        : 1px solid var(--border);
+  padding       : 32px;
+  border-radius : 4px;
+  transition    : transform 0.3s, box-shadow 0.3s;
+}
+
+.why-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+.why-pink { border-top: 3px solid var(--pink); }
+.why-cyan { border-top: 3px solid var(--cyan); }
+.why-gold { border-top: 3px solid var(--gold); }
+
+.why-icon    { font-size: 36px; margin-bottom: 14px; }
+.why-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--white); margin-bottom: 10px; }
+.why-card p  { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+/* ----- Cart Sidebar ----- */
+.overlay {
+  position       : fixed;
+  inset          : 0;
+  background     : rgba(0, 0, 0, 0.75);
+  z-index        : 200;
+  opacity        : 0;
+  pointer-events : none;
+  transition     : opacity 0.3s;
+  backdrop-filter : blur(6px);
+}
+
+.overlay.open { opacity: 1; pointer-events: all; }
+
+.cart-sidebar {
+  position       : fixed;
+  right          : 0;
+  top            : 0;
+  bottom         : 0;
+  width          : 440px;
+  background     : var(--card);
+  z-index        : 201;
+  transform      : translateX(100%);
+  transition     : transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display        : flex;
+  flex-direction : column;
+  border-left    : 1px solid var(--border);
+}
+
+.cart-sidebar.open { transform: translateX(0); }
+
+.cs-hd {
+  padding         : 28px 32px;
+  border-bottom   : 1px solid var(--border);
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
+}
+
+.cs-title {
+  font-family     : 'Playfair Display', serif;
+  font-size       : 26px;
+  font-weight     : 700;
+  background      : linear-gradient(135deg, var(--pink), var(--purple));
+  -webkit-background-clip : text;
+  -webkit-text-fill-color : transparent;
+  background-clip : text;
+}
+
+.cs-close {
+  background      : rgba(255, 255, 255, 0.06);
+  border          : 1px solid var(--border);
+  color           : var(--muted);
+  width           : 36px;
+  height          : 36px;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  cursor          : none;
+  font-size       : 18px;
+  border-radius   : 50%;
+  transition      : all 0.2s;
+}
+
+.cs-close:hover { background: rgba(255,77,141,0.15); color: var(--pink); border-color: var(--pink); }
+
+.cs-items     { flex: 1; overflow-y: auto; padding: 24px 32px; }
+
+.cart-empty {
+  display         : flex;
+  flex-direction  : column;
+  align-items     : center;
+  justify-content : center;
+  height          : 100%;
+  gap             : 16px;
+  color           : var(--muted);
+  text-align      : center;
+}
+
+.cart-empty-icon { font-size: 64px; opacity: 0.2; }
+.cart-empty p    { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; }
+
+.cart-item {
+  display       : flex;
+  gap           : 14px;
+  padding       : 18px 0;
+  border-bottom : 1px solid var(--border);
+}
+
+.cart-item-img {
+  width           : 72px;
+  height          : 90px;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  font-size       : 40px;
+  flex-shrink     : 0;
+  border-radius   : 4px;
+}
+
+.cart-item-body      { flex: 1; }
+.cart-item-name      { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--white); margin-bottom: 2px; }
+.cart-item-cat       { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--pink); margin-bottom: 10px; }
+.cart-item-controls  { display: flex; align-items: center; gap: 10px; }
+
+.qty-btn {
+  width           : 28px;
+  height          : 28px;
+  background      : rgba(255, 255, 255, 0.06);
+  border          : 1px solid var(--border);
+  color           : var(--text);
+  cursor          : none;
+  font-size       : 15px;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  border-radius   : 50%;
+  transition      : all 0.2s;
+}
+
+.qty-btn:hover      { background: var(--pink); border-color: var(--pink); color: #fff; }
+.cart-item-price    { font-size: 16px; font-weight: 700; color: var(--white); margin-left: auto; }
+
+.cart-item-remove {
+  background  : none;
+  border      : none;
+  color       : var(--muted);
+  cursor      : none;
+  font-size   : 18px;
+  padding     : 4px;
+  transition  : color 0.2s;
+}
+
+.cart-item-remove:hover { color: #e74c3c; }
+
+.cs-footer { padding: 24px 32px; border-top: 1px solid var(--border); }
+
+.cs-total-row {
+  display         : flex;
+  justify-content : space-between;
+  align-items     : center;
+  margin-bottom   : 8px;
+}
+
+.cs-total-row span   { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.cs-total-row strong { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--white); }
+.cs-note             { font-size: 11px; color: var(--muted); margin-bottom: 20px; }
+
+.checkout-btn {
+  width          : 100%;
+  background     : linear-gradient(135deg, var(--pink), var(--purple));
+  border         : none;
+  color          : #fff;
+  padding        : 18px;
+  font-family    : 'Syne', sans-serif;
+  font-size      : 12px;
+  letter-spacing : 3px;
+  text-transform : uppercase;
+  font-weight    : 700;
+  cursor         : none;
+  border-radius  : 2px;
+  transition     : all 0.3s;
+}
+
+.checkout-btn:hover { box-shadow: 0 0 40px rgba(255,77,141,0.5); transform: translateY(-1px); }
+
+/* ----- Quick View Modal ----- */
+.modal-bg {
+  position        : fixed;
+  inset           : 0;
+  background      : rgba(0, 0, 0, 0.88);
+  z-index         : 300;
+  opacity         : 0;
+  pointer-events  : none;
+  transition      : opacity 0.3s;
+  backdrop-filter : blur(10px);
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  padding         : 24px;
+}
+
+.modal-bg.open   { opacity: 1; pointer-events: all; }
+
+.modal-box {
+  background    : var(--card);
+  border        : 1px solid var(--border);
+  max-width     : 820px;
+  width         : 100%;
+  display       : flex;
+  overflow      : hidden;
+  max-height    : 90vh;
+  border-radius : 8px;
+  animation     : scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.modal-img {
+  width           : 360px;
+  flex-shrink     : 0;
+  position        : relative;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  overflow        : hidden;
+}
+
+.modal-emoji { font-size: 120px; }
+
+.modal-close {
+  position        : absolute;
+  top             : 16px;
+  right           : 16px;
+  background      : rgba(0, 0, 0, 0.6);
+  border          : none;
+  color           : #fff;
+  width           : 36px;
+  height          : 36px;
+  border-radius   : 50%;
+  font-size       : 18px;
+  cursor          : none;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  transition      : background 0.2s;
+}
+
+.modal-close:hover { background: var(--pink); }
+
+.modal-body {
+  padding        : 36px;
+  flex           : 1;
+  overflow-y     : auto;
+  display        : flex;
+  flex-direction : column;
+  gap            : 16px;
+}
+
+.modal-cat       { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--pink); }
+.modal-name      { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--white); line-height: 1.1; }
+.modal-price-row { display: flex; align-items: center; gap: 12px; }
+.modal-price     { font-size: 28px; font-weight: 700; color: var(--white); }
+.modal-old-price { font-size: 18px; color: var(--muted); text-decoration: line-through; }
+
+.modal-desc {
+  font-size   : 14px;
+  color       : var(--muted);
+  line-height : 1.8;
+  border-top  : 1px solid var(--border);
+  padding-top : 16px;
+}
+
+.modal-add-btn {
+  width          : 100%;
+  background     : linear-gradient(135deg, var(--pink), var(--purple));
+  border         : none;
+  color          : #fff;
+  padding        : 16px 32px;
+  font-family    : 'Syne', sans-serif;
+  font-size      : 12px;
+  letter-spacing : 2px;
+  text-transform : uppercase;
+  font-weight    : 700;
+  cursor         : none;
+  border-radius  : 2px;
+  transition     : all 0.3s;
+}
+
+.modal-add-btn:hover { box-shadow: 0 0 30px rgba(255,77,141,0.5); }
+
+/* ----- Toast ----- */
+.toast {
+  position      : fixed;
+  bottom        : 32px;
+  left          : 50%;
+  transform     : translateX(-50%) translateY(80px);
+  background    : var(--card);
+  border        : 1px solid rgba(255, 77, 141, 0.4);
+  color         : var(--text);
+  padding       : 14px 28px;
+  font-size     : 13px;
+  letter-spacing : 1px;
+  z-index       : 500;
+  white-space   : nowrap;
+  display       : flex;
+  align-items   : center;
+  gap           : 10px;
+  box-shadow    : 0 8px 40px rgba(255, 77, 141, 0.2);
+  border-radius : 99px;
+  transition    : transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+.toast-dot {
+  width         : 8px;
+  height        : 8px;
+  background    : var(--pink);
+  border-radius : 50%;
+  flex-shrink   : 0;
+}
+
+/* ----- Footer ----- */
+footer {
+  background  : var(--card);
+  border-top  : 1px solid var(--border);
+  padding     : 60px 48px 40px;
+  text-align  : center;
+}
+
+.footer-logo {
+  font-family    : 'Playfair Display', serif;
+  font-size      : 48px;
+  font-weight    : 900;
+  letter-spacing : 12px;
+  background     : linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
+  -webkit-background-clip : text;
+  -webkit-text-fill-color : transparent;
+  background-clip : text;
+  margin-bottom  : 16px;
+}
+
+.footer-sub  { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+.footer-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+
+.footer-tag {
+  background    : rgba(255, 255, 255, 0.05);
+  border        : 1px solid var(--border);
+  padding       : 4px 14px;
+  font-size     : 11px;
+  letter-spacing : 1px;
+  color         : var(--muted);
+  border-radius : 99px;
+}
+
+.footer-copy { font-size: 12px; color: var(--muted); letter-spacing: 2px; }
+
+/* ----- Utility Animations ----- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity   : 0;
+  transform : translateY(30px);
+  transition : opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ----- Responsive ----- */
+@media (max-width: 768px) {
+  nav            { padding: 0 20px; }
+  .nav-links     { display: none; }
+  .hero          { padding: 80px 20px 60px; }
+  .hero-floats   { display: none; }
+  .section       { padding: 60px 20px; }
+  .features      { grid-template-columns: 1fr 1fr; }
+  .feat          { border-right: none; border-bottom: 1px solid var(--border); }
+  .cart-sidebar  { width: 100%; }
+  .modal-box     { flex-direction: column; }
+  .modal-img     { width: 100%; height: 220px; }
+}
+
+  </style>
 </head>
 <body>
 
@@ -196,12 +1245,685 @@
     <p class="footer-copy">© 2025 LUXE · github.com/Aditya4902</p>
   </footer>
 
-  <!-- Scripts — order matters -->
-  <script src="js/data.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/app.js"></script>
+  <script>
+/* =====================================================
+   LUXE Fashion Store
+   Author  : Aditya | github.com/Aditya4902
+   File    : js/data.js
+   Desc    : Product catalogue — mirrors /api/products
+   ===================================================== */
+
+'use strict';
+
+const PRODUCTS = [
+  {
+    id      : 1,
+    name    : 'Silk Wrap Dress',
+    cat     : 'women',
+    price   : 4299,
+    old     : 5999,
+    emoji   : '👗',
+    bg      : 'linear-gradient(135deg, #ff9a9e, #fad0c4)',
+    badge   : 'new',
+    rating  : 4.8,
+    reviews : 124,
+    stock   : 15,
+    desc    : 'A flowing silk wrap dress that transitions effortlessly from day to night. Crafted from 100% pure silk with a self-tie waist.',
+  },
+  {
+    id      : 2,
+    name    : 'Cashmere Overcoat',
+    cat     : 'women',
+    price   : 8999,
+    old     : null,
+    emoji   : '🧥',
+    bg      : 'linear-gradient(135deg, #a18cd1, #fbc2eb)',
+    badge   : 'hot',
+    rating  : 4.9,
+    reviews : 88,
+    stock   : 8,
+    desc    : 'Luxurious pure cashmere overcoat with a tailored silhouette. The ultimate investment piece for any wardrobe.',
+  },
+  {
+    id      : 3,
+    name    : 'Linen Blazer',
+    cat     : 'men',
+    price   : 5499,
+    old     : 6999,
+    emoji   : '🥼',
+    bg      : 'linear-gradient(135deg, #84fab0, #8fd3f4)',
+    badge   : 'sale',
+    rating  : 4.7,
+    reviews : 56,
+    stock   : 20,
+    desc    : 'Perfectly structured linen blazer balancing casual and formal. Lightweight and breathable for year-round wear.',
+  },
+  {
+    id      : 4,
+    name    : 'Merino Wool Sweater',
+    cat     : 'men',
+    price   : 3299,
+    old     : null,
+    emoji   : '🧶',
+    bg      : 'linear-gradient(135deg, #f6d365, #fda085)',
+    badge   : 'new',
+    rating  : 4.6,
+    reviews : 201,
+    stock   : 30,
+    desc    : 'Ultra-soft merino wool sweater with a relaxed crew neck. Temperature-regulating and naturally odour-resistant.',
+  },
+  {
+    id      : 5,
+    name    : 'Gold Chain Necklace',
+    cat     : 'accessories',
+    price   : 2199,
+    old     : 2999,
+    emoji   : '📿',
+    bg      : 'linear-gradient(135deg, #ffd89b, #19547b)',
+    badge   : 'sale',
+    rating  : 4.5,
+    reviews : 310,
+    stock   : 50,
+    desc    : '18K gold-plated chain necklace with minimalist design. Tarnish-resistant and suitable for everyday wear.',
+  },
+  {
+    id      : 6,
+    name    : 'Leather Tote Bag',
+    cat     : 'accessories',
+    price   : 6799,
+    old     : null,
+    emoji   : '👜',
+    bg      : 'linear-gradient(135deg, #e0c3fc, #8ec5fc)',
+    badge   : 'hot',
+    rating  : 4.9,
+    reviews : 445,
+    stock   : 12,
+    desc    : 'Full-grain Italian leather tote with brass hardware. Spacious interior with multiple compartments.',
+  },
+  {
+    id      : 7,
+    name    : 'Block Heel Pumps',
+    cat     : 'footwear',
+    price   : 4599,
+    old     : 5500,
+    emoji   : '👠',
+    bg      : 'linear-gradient(135deg, #ff758c, #ff7eb3)',
+    badge   : 'sale',
+    rating  : 4.7,
+    reviews : 98,
+    stock   : 18,
+    desc    : 'Elegant block heel pumps in genuine leather. The 6cm block heel provides comfort without compromising style.',
+  },
+  {
+    id      : 8,
+    name    : 'Suede Chelsea Boots',
+    cat     : 'footwear',
+    price   : 7299,
+    old     : null,
+    emoji   : '👢',
+    bg      : 'linear-gradient(135deg, #43e97b, #38f9d7)',
+    badge   : 'new',
+    rating  : 4.8,
+    reviews : 76,
+    stock   : 10,
+    desc    : 'Premium suede Chelsea boots with elastic side panels. Pull-on style with a stacked leather sole.',
+  },
+  {
+    id      : 9,
+    name    : 'Pleated Midi Skirt',
+    cat     : 'women',
+    price   : 2899,
+    old     : 3799,
+    emoji   : '🩱',
+    bg      : 'linear-gradient(135deg, #f093fb, #f5576c)',
+    badge   : 'sale',
+    rating  : 4.4,
+    reviews : 143,
+    stock   : 25,
+    desc    : 'Elegant pleated midi skirt in fluid satin-finish fabric. Pairs effortlessly with casual and formal tops.',
+  },
+  {
+    id      : 10,
+    name    : 'Slim Fit Chinos',
+    cat     : 'men',
+    price   : 2499,
+    old     : null,
+    emoji   : '👖',
+    bg      : 'linear-gradient(135deg, #4facfe, #00f2fe)',
+    badge   : null,
+    rating  : 4.5,
+    reviews : 267,
+    stock   : 40,
+    desc    : 'Modern slim-fit chinos crafted from stretch-cotton blend. Four-way stretch fabric for all-day comfort.',
+  },
+  {
+    id      : 11,
+    name    : 'Sunglasses Gold Frame',
+    cat     : 'accessories',
+    price   : 3499,
+    old     : 4200,
+    emoji   : '🕶️',
+    bg      : 'linear-gradient(135deg, #fa709a, #fee140)',
+    badge   : 'hot',
+    rating  : 4.6,
+    reviews : 189,
+    stock   : 22,
+    desc    : 'Oversized gold-frame sunglasses with UV400 polarised lenses. Lightweight titanium frame for all-day wear.',
+  },
+  {
+    id      : 12,
+    name    : 'White Leather Sneakers',
+    cat     : 'footwear',
+    price   : 5299,
+    old     : null,
+    emoji   : '👟',
+    bg      : 'linear-gradient(135deg, #a1c4fd, #c2e9fb)',
+    badge   : 'new',
+    rating  : 4.8,
+    reviews : 522,
+    stock   : 35,
+    desc    : 'Clean white leather sneakers with a minimalist silhouette. Premium Italian leather upper with cushioned insole.',
+  },
+];
+
+/* =====================================================
+   LUXE Fashion Store
+   Author  : Aditya | github.com/Aditya4902
+   File    : js/ui.js
+   Desc    : UI effects — cursor, particles, marquee,
+             toast notifications, scroll behaviour
+   ===================================================== */
+
+'use strict';
+
+/* ================================================
+   CUSTOM CURSOR
+   ================================================ */
+const cursorDot  = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+
+let mouseX = 0;
+let mouseY = 0;
+let ringX  = 0;
+let ringY  = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursorDot.style.left = mouseX + 'px';
+  cursorDot.style.top  = mouseY + 'px';
+});
+
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top  = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+
+animateRing();
+
+document.addEventListener('mouseover', (e) => {
+  if (!e.target.matches('button, a, input, select')) return;
+  cursorDot.style.width        = '20px';
+  cursorDot.style.height       = '20px';
+  cursorRing.style.width       = '56px';
+  cursorRing.style.height      = '56px';
+  cursorRing.style.borderColor = 'rgba(255, 77, 141, 0.9)';
+});
+
+document.addEventListener('mouseout', (e) => {
+  if (!e.target.matches('button, a, input, select')) return;
+  cursorDot.style.width        = '12px';
+  cursorDot.style.height       = '12px';
+  cursorRing.style.width       = '40px';
+  cursorRing.style.height      = '40px';
+  cursorRing.style.borderColor = 'rgba(255, 77, 141, 0.5)';
+});
+
+/* ================================================
+   BACKGROUND PARTICLES
+   ================================================ */
+const PARTICLE_COLORS = ['#ff4d8d', '#00e5ff', '#b06cff', '#ffd166', '#00ff94'];
+
+function initParticles() {
+  const container = document.getElementById('particles');
+
+  for (let i = 0; i < 28; i++) {
+    const el    = document.createElement('div');
+    const size  = Math.random() * 5 + 2;
+    const color = PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)];
+
+    el.className  = 'particle';
+    el.style.cssText = [
+      `width: ${size}px`,
+      `height: ${size}px`,
+      `left: ${Math.random() * 100}%`,
+      `background: ${color}`,
+      `animation-duration: ${8 + Math.random() * 14}s`,
+      `animation-delay: ${Math.random() * 10}s`,
+    ].join('; ');
+
+    container.appendChild(el);
+  }
+}
+
+/* ================================================
+   MARQUEE STRIP
+   ================================================ */
+const MARQUEE_LABELS = [
+  'New Collection', 'Free Shipping',  'Premium Quality',
+  'Easy Returns',   'Trending Now',   'Flash Sale',
+  'Top Brands',     'Secure Payment',
+];
+
+function initMarquee() {
+  const track = document.getElementById('marqueeTrack');
+  const html  = MARQUEE_LABELS
+    .map(label => `<span class="marquee-item">${label}</span><span class="marquee-item" style="opacity:0.4">✦</span>`)
+    .join('');
+  track.innerHTML = html + html;  // duplicate for seamless infinite scroll
+}
+
+/* ================================================
+   TOAST NOTIFICATION
+   ================================================ */
+let toastTimer = null;
+
+function showToast(message) {
+  const toastEl = document.getElementById('toast');
+  document.getElementById('toastMessage').textContent = message;
+
+  toastEl.classList.add('show');
+
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
+}
+
+/* ================================================
+   SCROLL BEHAVIOUR
+   ================================================ */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* Scroll reveal for sections */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+/* ================================================
+   HELPERS
+   ================================================ */
+function scrollToProducts() {
+  document.getElementById('productsSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* =====================================================
+   LUXE Fashion Store
+   Author  : Aditya | github.com/Aditya4902
+   File    : js/products.js
+   Desc    : Product rendering, filtering, sorting,
+             searching, 3D tilt, wishlist & quick-view
+   ===================================================== */
+
+'use strict';
+
+let filtered = [...PRODUCTS];
+let wishlist = new Set();
+
+/* ================================================
+   RENDER
+   ================================================ */
+function renderProducts(list) {
+  const grid = document.getElementById('productGrid');
+  document.getElementById('rInfo').textContent =
+    `${list.length} product${list.length !== 1 ? 's' : ''}`;
+
+  grid.innerHTML = list.map((p, i) => {
+    const stars     = '★'.repeat(Math.floor(p.rating)) + '☆'.repeat(5 - Math.floor(p.rating));
+    const disc      = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+    const badgeHTML = p.badge ? `<span class="pbadge b-${p.badge}">${p.badge}</span>` : '';
+    const oldHTML   = p.old
+      ? `<span class="pc-old-price">₹${p.old.toLocaleString()}</span>
+         <span class="pc-discount">-${disc}%</span>`
+      : '';
+    const liked = wishlist.has(p.id);
+
+    return `
+      <div class="pcard"
+           style="animation: fadeUp 0.5s ease ${i * 0.06}s both"
+           onmousemove="tiltCard(this, event)"
+           onmouseleave="resetTilt(this)">
+
+        <div class="pcard-img" style="background: ${p.bg}">
+          <div class="pcard-placeholder">${p.emoji}</div>
+          ${badgeHTML}
+          <div class="pcard-overlay">
+            <button class="ov-add"  onclick="addToCart(${p.id}, event)">Add to Cart</button>
+            <div class="ov-row">
+              <button class="ov-wish ${liked ? 'liked' : ''}"
+                      onclick="toggleWishlist(${p.id}, this, event)">
+                ${liked ? '♥ Liked' : '♡ Wishlist'}
+              </button>
+              <button class="ov-view" onclick="openModal(${p.id}, event)">Quick View</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pcard-info">
+          <p class="pc-cat">${p.cat}</p>
+          <h3 class="pc-name">${p.name}</h3>
+          <div class="pc-price-row">
+            <span class="pc-price">₹${p.price.toLocaleString()}</span>
+            ${oldHTML}
+          </div>
+          <div class="pc-stars">
+            <span>${stars}</span>
+            <small>${p.rating} (${p.reviews})</small>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ================================================
+   3D CARD TILT
+   ================================================ */
+function tiltCard(el, e) {
+  const rect = el.getBoundingClientRect();
+  const x    = ((e.clientX - rect.left) / rect.width  - 0.5) * 20;
+  const y    = -((e.clientY - rect.top)  / rect.height - 0.5) * 20;
+  el.style.transform  = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg) scale(1.04)`;
+  el.style.transition = 'transform 0.05s';
+}
+
+function resetTilt(el) {
+  el.style.transform  = 'perspective(900px) rotateY(0deg) rotateX(0deg) scale(1)';
+  el.style.transition = 'transform 0.5s ease';
+}
+
+/* ================================================
+   FILTER
+   ================================================ */
+function filterBy(category, btn) {
+  document.querySelectorAll('.fp, .nav-link').forEach((el) => el.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  filtered = category === 'all'
+    ? [...PRODUCTS]
+    : PRODUCTS.filter((p) => p.cat === category);
+
+  renderProducts(filtered);
+  scrollToProducts();
+}
+
+/* ================================================
+   SORT
+   ================================================ */
+function sortProducts(value) {
+  const list = [...filtered];
+
+  const sorters = {
+    pl : (a, b) => a.price  - b.price,
+    ph : (a, b) => b.price  - a.price,
+    ra : (a, b) => b.rating - a.rating,
+    nm : (a, b) => a.name.localeCompare(b.name),
+  };
+
+  if (sorters[value]) list.sort(sorters[value]);
+  renderProducts(list);
+}
+
+/* ================================================
+   SEARCH
+   ================================================ */
+function searchProducts(query) {
+  const q = query.toLowerCase().trim();
+  const results = PRODUCTS.filter((p) =>
+    p.name.toLowerCase().includes(q) ||
+    p.cat.toLowerCase().includes(q)
+  );
+  renderProducts(results);
+}
+
+/* ================================================
+   WISHLIST
+   ================================================ */
+function toggleWishlist(id, btn, e) {
+  if (e) e.stopPropagation();
+
+  if (wishlist.has(id)) {
+    wishlist.delete(id);
+    btn.textContent = '♡ Wishlist';
+    btn.classList.remove('liked');
+  } else {
+    wishlist.add(id);
+    btn.textContent = '♥ Liked';
+    btn.classList.add('liked');
+    showToast('Added to wishlist ♥');
+  }
+}
+
+/* ================================================
+   QUICK VIEW MODAL
+   ================================================ */
+function openModal(id, e) {
+  if (e) e.stopPropagation();
+
+  const p = PRODUCTS.find((x) => x.id === id);
+  if (!p) return;
+
+  document.getElementById('modalEmoji').textContent          = p.emoji;
+  document.getElementById('modalImgWrap').style.background   = p.bg;
+  document.getElementById('modalCat').textContent            = p.cat.toUpperCase();
+  document.getElementById('modalName').textContent           = p.name;
+  document.getElementById('modalPrice').textContent          = '₹' + p.price.toLocaleString();
+  document.getElementById('modalOldPrice').textContent       = p.old ? '₹' + p.old.toLocaleString() : '';
+  document.getElementById('modalDesc').textContent           = p.desc;
+  document.getElementById('modalRating').innerHTML =
+    `<span style="color:var(--gold); font-size:16px">${'★'.repeat(Math.floor(p.rating))}</span>
+     <span style="color:var(--muted); font-size:13px; margin-left:6px">
+       ${p.rating} · ${p.reviews} reviews
+     </span>`;
+
+  document.getElementById('modalAddBtn').onclick = () => {
+    addToCart(p.id, null);
+    document.getElementById('modalBg').classList.remove('open');
+  };
+
+  document.getElementById('modalBg').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalBg')) {
+    document.getElementById('modalBg').classList.remove('open');
+  }
+}
+
+/* =====================================================
+   LUXE Fashion Store
+   Author  : Aditya | github.com/Aditya4902
+   File    : js/cart.js
+   Desc    : Cart state management — add, remove,
+             quantity control, render, checkout
+   ===================================================== */
+
+'use strict';
+
+let cart = [];
+
+/* ================================================
+   ADD TO CART
+   ================================================ */
+function addToCart(id, e) {
+  if (e) e.stopPropagation();
+
+  const product  = PRODUCTS.find((p) => p.id === id);
+  const existing = cart.find((p) => p.id === id);
+
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+
+  updateCartBadge();
+  renderCart();
+  showToast(`${product.name} added ✓`);
+
+  /* API call — works when backend (server.js) is running */
+  fetch('/api/cart', {
+    method  : 'POST',
+    headers : { 'Content-Type': 'application/json' },
+    body    : JSON.stringify({ productId: id, qty: 1 }),
+  }).catch(() => {
+    /* Graceful fallback — site works offline without backend */
+  });
+}
+
+/* ================================================
+   REMOVE FROM CART
+   ================================================ */
+function removeFromCart(id) {
+  cart = cart.filter((item) => item.id !== id);
+  updateCartBadge();
+  renderCart();
+
+  fetch(`/api/cart/${id}`, { method: 'DELETE' }).catch(() => {});
+}
+
+/* ================================================
+   CHANGE QUANTITY
+   ================================================ */
+function changeQty(id, delta) {
+  const item = cart.find((p) => p.id === id);
+  if (!item) return;
+
+  item.qty += delta;
+
+  if (item.qty <= 0) {
+    removeFromCart(id);
+  } else {
+    updateCartBadge();
+    renderCart();
+
+    fetch(`/api/cart/${id}`, {
+      method  : 'PUT',
+      headers : { 'Content-Type': 'application/json' },
+      body    : JSON.stringify({ qty: item.qty }),
+    }).catch(() => {});
+  }
+}
+
+/* ================================================
+   UPDATE BADGE COUNT
+   ================================================ */
+function updateCartBadge() {
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById('cartBadge').textContent = count;
+}
+
+/* ================================================
+   RENDER CART SIDEBAR
+   ================================================ */
+function renderCart() {
+  const itemsEl  = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+
+  if (!cart.length) {
+    itemsEl.innerHTML = `
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛍</div>
+        <p>Your cart is empty</p>
+        <span style="font-size:13px">Add some items to get started</span>
+      </div>`;
+    footerEl.style.display = 'none';
+    return;
+  }
+
+  footerEl.style.display = 'block';
+
+  itemsEl.innerHTML = cart.map((item) => `
+    <div class="cart-item">
+      <div class="cart-item-img" style="background: ${item.bg}">${item.emoji}</div>
+      <div class="cart-item-body">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-cat">${item.cat}</div>
+        <div class="cart-item-controls">
+          <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+          <span style="font-size:14px; font-weight:600; min-width:20px; text-align:center">
+            ${item.qty}
+          </span>
+          <button class="qty-btn" onclick="changeQty(${item.id}, +1)">+</button>
+          <span class="cart-item-price">₹${(item.price * item.qty).toLocaleString()}</span>
+          <button class="cart-item-remove" onclick="removeFromCart(${item.id})">×</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  document.getElementById('cartTotal').textContent = '₹' + total.toLocaleString();
+}
+
+/* ================================================
+   TOGGLE CART SIDEBAR
+   ================================================ */
+function toggleCart() {
+  document.getElementById('cartSidebar').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+  renderCart();
+}
+
+/* ================================================
+   CHECKOUT
+   ================================================ */
+function checkout() {
+  fetch('/api/orders', { method: 'POST' }).catch(() => {});
+
+  showToast('🎉 Order placed successfully!');
+  cart = [];
+  updateCartBadge();
+  renderCart();
+  toggleCart();
+}
+
+/* =====================================================
+   LUXE Fashion Store
+   Author  : Aditya | github.com/Aditya4902
+   File    : js/app.js
+   Desc    : Application entry point — boots the app
+             after page load completes
+   ===================================================== */
+
+'use strict';
+
+window.addEventListener('load', () => {
+
+  /* Hide loader after intro animation finishes */
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('gone');
+
+    /* Boot all modules */
+    initParticles();
+    initMarquee();
+    renderProducts(PRODUCTS);
+
+  }, 1600);
+
+});
+
+  </script>
 
 </body>
 </html>
