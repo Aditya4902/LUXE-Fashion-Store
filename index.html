@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LUXE — Premium Fashion Store. Curated luxury fashion for the modern individual." />
+  <title>LUXE — Premium Fashion Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Background Particles -->
+  <div id="particles"></div>
+
+  <!-- Page Loader -->
+  <div id="loader">
+    <div class="loader-logo">LUXE</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <p class="loader-txt">Loading Collection</p>
+  </div>
+
+  <!-- =========== NAVBAR =========== -->
+  <nav id="nav">
+    <a class="nav-logo" href="#">LUXE</a>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="filterBy('all', this)">All</button>
+      <button class="nav-link" onclick="filterBy('women', this)">Women</button>
+      <button class="nav-link" onclick="filterBy('men', this)">Men</button>
+      <button class="nav-link" onclick="filterBy('accessories', this)">Accessories</button>
+      <button class="nav-link" onclick="filterBy('footwear', this)">Footwear</button>
+    </div>
+    <div class="nav-right">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search products..." oninput="searchProducts(this.value)" />
+      </div>
+      <button class="cart-pill" onclick="toggleCart()">
+        🛍 Cart <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =========== HERO =========== -->
+  <section class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="blink-dot"></span>
+        New Drop — Spring 2025
+      </div>
+      <h1 class="hero-title">
+        <span class="line1">Define Your</span>
+        <span class="line2">Aesthetic.</span>
+      </h1>
+      <p class="hero-sub">
+        Curated luxury fashion for those who dare to be different.
+        Where every piece tells a story worth wearing.
+      </p>
+      <div class="hero-ctas">
+        <button class="btn-glow" onclick="scrollToProducts()">Shop the Drop</button>
+        <button class="btn-ghost">View Lookbook</button>
+      </div>
+    </div>
+    <div class="hero-floats">
+      <div class="hf-card hf-pink">
+        <div class="fi fi-pink">🔥</div>
+        <div class="ft"><strong>Trending Now</strong><span>Silk Wrap Dress — ₹4,299</span></div>
+      </div>
+      <div class="hf-card hf-cyan">
+        <div class="fi fi-cyan">⭐</div>
+        <div class="ft"><strong>Top Rated</strong><span>4.9★ Cashmere Overcoat</span></div>
+      </div>
+      <div class="hf-card hf-gold">
+        <div class="fi fi-gold">🏷️</div>
+        <div class="ft"><strong>Flash Sale</strong><span>Up to 40% off today</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== MARQUEE =========== -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+
+  <!-- =========== FEATURES =========== -->
+  <div class="features">
+    <div class="feat"><span class="feat-icon">🚚</span><h4>Free Shipping</h4><p>On all orders above ₹999</p></div>
+    <div class="feat"><span class="feat-icon">↩️</span><h4>Easy Returns</h4><p>30-day hassle-free returns</p></div>
+    <div class="feat"><span class="feat-icon">🔐</span><h4>Secure Payment</h4><p>256-bit SSL encryption</p></div>
+    <div class="feat"><span class="feat-icon">✨</span><h4>Premium Quality</h4><p>Expertly curated pieces only</p></div>
+  </div>
+
+  <!-- =========== PRODUCTS =========== -->
+  <section class="section products-section reveal" id="productsSection">
+    <p class="sec-ey">Our Collection</p>
+    <h2 class="sec-ti">Featured <span class="grad">Products</span></h2>
+    <div class="filters">
+      <div class="fps">
+        <button class="fp active" onclick="filterBy('all', this)">All Items</button>
+        <button class="fp" onclick="filterBy('women', this)">Women</button>
+        <button class="fp" onclick="filterBy('men', this)">Men</button>
+        <button class="fp" onclick="filterBy('accessories', this)">Accessories</button>
+        <button class="fp" onclick="filterBy('footwear', this)">Footwear</button>
+      </div>
+      <div class="filter-right">
+        <span class="results-info" id="rInfo">12 products</span>
+        <select class="sort-sel" onchange="sortProducts(this.value)">
+          <option value="">Featured</option>
+          <option value="pl">Price: Low → High</option>
+          <option value="ph">Price: High → Low</option>
+          <option value="ra">Top Rated</option>
+          <option value="nm">Name A–Z</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <!-- =========== WHY US =========== -->
+  <section class="section reveal">
+    <p class="sec-ey">Why Choose Us</p>
+    <h2 class="sec-ti">Built for <span class="grad">Bold</span> People</h2>
+    <div class="why-grid">
+      <div class="why-card why-pink"><div class="why-icon">👗</div><h3>Curated Fashion</h3><p>Every piece hand-selected by our fashion experts for quality and style that lasts.</p></div>
+      <div class="why-card why-cyan"><div class="why-icon">⚡</div><h3>Fast Delivery</h3><p>Same-day dispatch on orders before 2pm. Express delivery to 500+ cities.</p></div>
+      <div class="why-card why-gold"><div class="why-icon">💎</div><h3>Premium Only</h3><p>We partner exclusively with verified premium brands. No fakes, ever.</p></div>
+    </div>
+  </section>
+
+  <!-- =========== CART SIDEBAR =========== -->
+  <div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cs-hd">
+      <span class="cs-title">Your Cart</span>
+      <button class="cs-close" onclick="toggleCart()">×</button>
+    </div>
+    <div class="cs-items" id="cartItems"></div>
+    <div class="cs-footer" id="cartFooter" style="display:none">
+      <div class="cs-total-row">
+        <span>Total</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+      <p class="cs-note">Free shipping · Taxes included</p>
+      <button class="checkout-btn" onclick="checkout()">Checkout →</button>
+    </div>
+  </div>
+
+  <!-- =========== QUICK VIEW MODAL =========== -->
+  <div class="modal-bg" id="modalBg" onclick="closeModal(event)">
+    <div class="modal-box">
+      <div class="modal-img" id="modalImgWrap">
+        <span class="modal-emoji" id="modalEmoji"></span>
+        <button class="modal-close" onclick="document.getElementById('modalBg').classList.remove('open')">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-cat" id="modalCat"></p>
+        <h2 class="modal-name" id="modalName"></h2>
+        <div class="modal-price-row">
+          <span class="modal-price" id="modalPrice"></span>
+          <span class="modal-old-price" id="modalOldPrice"></span>
+        </div>
+        <div class="modal-rating" id="modalRating"></div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <button class="modal-add-btn" id="modalAddBtn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========== TOAST =========== -->
+  <div class="toast" id="toast">
+    <div class="toast-dot"></div>
+    <span id="toastMessage">Added to cart</span>
+  </div>
+
+  <!-- =========== FOOTER =========== -->
+  <footer>
+    <div class="footer-logo">LUXE</div>
+    <p class="footer-sub">Premium Fashion · Full Stack Portfolio Project by Aditya</p>
+    <div class="footer-tags">
+      <span class="footer-tag">HTML5</span>
+      <span class="footer-tag">CSS3</span>
+      <span class="footer-tag">JavaScript</span>
+      <span class="footer-tag">Node.js</span>
+      <span class="footer-tag">Express.js</span>
+      <span class="footer-tag">REST API</span>
+      <span class="footer-tag">Full Stack</span>
+    </div>
+    <p class="footer-copy">© 2025 LUXE · github.com/Aditya4902</p>
+  </footer>
+
+  <!-- Scripts — order matters -->
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
