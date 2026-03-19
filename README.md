@@ -2,7 +2,7 @@
 
 > Full stack e-commerce fashion store with 3D interactive product cards, custom animated cursor, particle effects, cart sidebar, quick-view modal and a Node.js/Express REST API backend.
 
-🔗 **Live Demo** → https://Aditya4902.github.io/luxe/
+🔗 **Live Demo** → https://luxe-fashion-store-omega.vercel.app/
 
 ---
 
