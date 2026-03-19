@@ -1,10 +1,3 @@
-/* =====================================================
-   LUXE Fashion Store
-   Author  : Aditya | github.com/Aditya4902
-   File    : js/cart.js
-   Desc    : Cart state management — add, remove,
-             quantity control, render, checkout
-   ===================================================== */
 
 'use strict';
 
